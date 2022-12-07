@@ -3,6 +3,7 @@ const internModel = require('../models/internModel')
 const { isValidString , abbrValidation , logoLinkValidator } = require('../Validator/validator')
 
 const createCollege = async function(req , res){
+    res.setHeader('Access-Control-Allow-Origin','*')
 
     try{
 
@@ -33,6 +34,7 @@ const createCollege = async function(req , res){
 }
 
 const getCollegeData = async function(req , res){
+    res.setHeader('Access-Control-Allow-Origin','*')
 
     try {
 
@@ -42,13 +44,13 @@ const getCollegeData = async function(req , res){
     if(Object.keys(filter).length == 0) return res.status(400).send({ status: false, message: "Filters are required !!!" })
 
     if(!collegeName) return res.status(400).send({ status: false, message: "College Name is required !!!" })
-    if(!isValidString(collegeName)) return res.status(400).send({ status: false, message: "College Name is required !!!" })
+    if(!isValidString(collegeName)) return res.status(400).send({ status: false, message: "College Name(value) is required !!!" })
 
     let getCollegeData = await collegeModel.findOne({ name : collegeName , isDeleted : false }).select({ name : 1 , fullName : 1 , logoLink : 1 })
 
     if(!getCollegeData)  return res.status(404).send({ status: false, message: "College not found." })
 
-    let collegeId = getCollegeData._id
+    let collegeId = getCollegeData._id   //colg id ko get clgdeta se access kr rhe h
 
     let dataOfInterns = await internModel.find({ collegeId : collegeId , isDeleted : false }).select({ name : 1 , email : 1 , mobile : 1 })
 
@@ -69,3 +71,5 @@ const getCollegeData = async function(req , res){
 }
 
 module.exports = { createCollege , getCollegeData }
+
+

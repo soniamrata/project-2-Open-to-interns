@@ -4,6 +4,7 @@ const emailValidator = require('email-validator')
 const { isValidString , nameValidation , mobileValidation } = require('../Validator/validator')
 
 const createIntern = async function(req , res){
+    res.setHeader('Access-Control-Allow-Origin','*')
 
     try {
     
@@ -43,4 +44,28 @@ const createIntern = async function(req , res){
     res.status(500).send({ status: false, message: error.message })
 }}
 
+
+
+
+
+
+
+
 module.exports = { createIntern }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
